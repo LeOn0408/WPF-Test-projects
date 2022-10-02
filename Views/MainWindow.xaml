@@ -1,0 +1,84 @@
+﻿<Window x:Class="WPF_Test.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_Test"
+        xmlns:vm="clr-namespace:WPF_Test.ViewModels"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.25*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>           
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" Margin ="5,5,5,5">
+            <ComboBox Text="Выбор проекта..." 
+                    IsEditable="True"
+                    IsReadOnly="True"
+                    Margin ="5,5,5,5"
+                    ItemsSource = "{Binding Projects}"
+                    DisplayMemberPath="Name"
+                    SelectedValuePath="Id"
+                    SelectedValue="{Binding Path=SelectProjectId}"
+            />
+            <ComboBox Text="Выбор стадии..." 
+                    IsEditable="True"
+                    IsReadOnly="True"
+                    Margin ="5,5,5,5"
+                    ItemsSource = "{Binding Stages}"
+                    DisplayMemberPath="Name"
+                    SelectedValuePath="Id"
+                    SelectedValue="{Binding Path=SelectStageId}"
+            />
+        </StackPanel>
+        <Grid Grid.Column="1" Margin ="5,5,5,5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition> 
+                <RowDefinition Height="auto"></RowDefinition>           
+            </Grid.RowDefinitions>
+            <DockPanel Grid.Row="0">
+                <ComboBox Text="Фильтр по направлению..." 
+                    IsEditable="True"
+                    IsReadOnly="True"
+                    Margin ="5,5,5,5"
+                    ItemsSource = "{Binding Fields}"
+                    DisplayMemberPath="Name"
+                    SelectedValuePath="Id"
+                    SelectedValue="{Binding Path=SelectField}"
+                />
+                <CheckBox 
+                    Content ='Скрыть "0"'
+                    IsChecked="{Binding OnlyFilled}"
+                    Margin ="5,5,5,5"
+                >
+                </CheckBox>
+            </DockPanel>
+            <DataGrid ItemsSource="{Binding ProjectDocuments, Mode=TwoWay}" 
+                      AutoGenerateColumns="False"
+                      ColumnWidth="*"
+                      Grid.Row="1">
+                <DataGrid.Columns>
+                    <DataGridTextColumn IsReadOnly = "true" Header="Направление" Binding="{Binding Path = Document.Field.Name}"/>
+                    <DataGridTextColumn IsReadOnly = "true" Header="Код" Binding="{Binding Path = Code}"/>
+                    <DataGridTextColumn IsReadOnly = "true" Header="Документ" Binding="{Binding Path = Document.Name}"/>
+                    <DataGridTextColumn IsReadOnly = "true" Header="Норматив чел./час" Binding="{Binding Path = Standard}"/>
+                    <DataGridTextColumn Header="Кол-во" Binding="{Binding Path = Quantity}"/>
+                    <DataGridTextColumn IsReadOnly = "true" Header="Итого(все)" Binding="{Binding Path = Total}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button Content="Export" 
+                    Command="{Binding ExportData}"
+                    Grid.Row="2"
+                    Height="30"
+                    Width="80" 
+                    HorizontalAlignment="Right"
+                    Margin="5,5,5,5"
+                    />
+        </Grid>
+    </Grid>
+</Window>

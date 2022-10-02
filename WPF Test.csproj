@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<RootNamespace>WPF_Test</RootNamespace>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="itextsharp.4.1.6.0" Version="4.1.6" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.9" />
+		<PackageReference Include="DocumentFormat.OpenXml" Version="2.18.0" />
+	</ItemGroup>
+</Project>
